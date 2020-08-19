@@ -57,7 +57,8 @@ cmake \
     -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
     -DBUILD_TESTS=OFF \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
-    -DBOOST_INCLUDEDIR=${pwd}/../boost_1_67_0/ \
+    -DBOOST_INCLUDEDIR=../boost_1_67_0/ \
+    -DBOOST_ROOT=../boost_1_67_0/ \
     ..
 make
 # Create DEB
