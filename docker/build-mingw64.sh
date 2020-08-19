@@ -58,6 +58,7 @@ cmake \
     -DBUILD_TESTS=OFF \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DBOOST_INCLUDEDIR=../boost_1_67_0/ \
+	-DBOOST_ROOT=../boost_1_67_0/ \
     ..
 make
 # Create DEB
