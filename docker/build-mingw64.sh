@@ -36,8 +36,8 @@ ln -s libws2_32.a libWs2_32.a
 cd "${_old_pwd}"
 
 # Download Boost headers. Since we need only the headers, no need to get cross-compiled Boost binaries.
-wget "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.zip" -0 boost_source.zip
-unzip boost_source.zip
+wget "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.zip" -O boost_source.zip
+cmake -E tar -xf boost_source.zip
 
 
 mkdir build
@@ -58,7 +58,6 @@ cmake \
     -DBUILD_TESTS=OFF \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DBOOST_INCLUDEDIR=../boost_1_67_0/ \
-    -DBOOST_ROOT=../boost_1_67_0/ \
     ..
 make
 # Create DEB
