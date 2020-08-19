@@ -28,8 +28,11 @@ endif()
 find_package(Stb REQUIRED)
 include_directories(${Stb_INCLUDE_DIRS})
 
-#arachne needs boost polygon/voronoi
-find_package(Boost REQUIRED)
+#Need Boost headers to compute Voronoi diagrams.
+find_package(Boost)
+if(NOT Boost_FOUND) #This check is NOT the same as making Boost required; we allow finding headers but not the libraries.
+    message(FATAL_ERROR "Could NOT find the Boost headers!")
+endif()
 include_directories(${Boost_INCLUDE_DIRS})
 
 option(USE_SYSTEM_LIBS "Use the system libraries if available" OFF)
