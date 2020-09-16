@@ -351,7 +351,7 @@ void AreaSupport::combineSupportInfillLayers(SliceDataStorage& storage)
 
             for (SupportInfillPart& part : layer.support_infill_parts)
             {
-                if (part.insets.empty() && part.inset_count_to_generate > 0)
+                if (part.inset_count_to_generate > 0)
                 {
                     continue;
                 }
@@ -361,7 +361,7 @@ void AreaSupport::combineSupportInfillLayers(SliceDataStorage& storage)
                     Polygons result;
                     for (SupportInfillPart& lower_layer_part : lower_layer.support_infill_parts)
                     {
-                        if (lower_layer_part.insets.empty() && part.inset_count_to_generate > 0)
+                        if (part.inset_count_to_generate > 0)
                         {
                             continue;
                         }
@@ -411,23 +411,24 @@ void AreaSupport::generateOutlineInsets(std::vector<Polygons>& insets, Polygons&
 {
     for (unsigned int inset_idx = 0; inset_idx < inset_count; inset_idx++)
     {
-        insets.push_back(Polygons());
-        if (inset_idx == 0)
-        {
-            insets[0] = outline.offset(-wall_line_width_x / 2);
-        }
-        else
-        {
-            insets[inset_idx] = insets[inset_idx - 1].offset(-wall_line_width_x);
-        }
-
-        // optimize polygons: remove unnecessary verts
-        insets[inset_idx].simplify();
-        if (insets[inset_idx].size() < 1)
-        {
-            insets.pop_back();
-            break;
-        }
+        insets.emplace_back(outline);
+//        insets.push_back(Polygons());
+//        if (inset_idx == 0)
+//        {
+//            insets[0] = outline.offset(-wall_line_width_x / 2);
+//        }
+//        else
+//        {
+//            insets[inset_idx] = insets[inset_idx - 1].offset(-wall_line_width_x);
+//        }
+//
+//        // optimize polygons: remove unnecessary verts
+//        insets[inset_idx].simplify();
+//        if (insets[inset_idx].size() < 1)
+//        {
+//            insets.pop_back();
+//            break;
+//        }
     }
 }
 
@@ -443,10 +444,7 @@ void AreaSupport::cleanup(SliceDataStorage& storage)
             bool can_be_removed = true;
             if (part.inset_count_to_generate > 0)
             {
-                if (part.insets.size() > 0 && part.insets[0].size() > 0)
-                {
-                    can_be_removed = false;
-                }
+                can_be_removed = false;
             }
             else
             {
