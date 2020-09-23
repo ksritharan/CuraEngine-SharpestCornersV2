@@ -191,7 +191,7 @@ int PathOrderOptimizer::getClosestPointInPolygon(Point prev_point, int poly_idx)
                 }
                 break;
             case EZSeamCornerPrefType::Z_SEAM_CORNER_PREF_OUTER:
-                if (corner_angle < 1)
+                //if (corner_angle < 1)
                 {
                     // p1 lies on a convex curve so reduce the distance to favour it
                     // the more convex the curve, the more we reduce the distance
