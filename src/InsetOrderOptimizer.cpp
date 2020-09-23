@@ -135,7 +135,9 @@ void InsetOrderOptimizer::processHoleInsets()
     // to the first hole
 
     Point start_point = gcode_layer.getLastPlannedPositionOrStartingPosition(); // where we are now
-    const bool optimize_backwards = (z_seam_config.type == EZSeamType::USER_SPECIFIED || z_seam_config.type == EZSeamType::SHARPEST_CORNER);
+    const bool optimize_backwards = (z_seam_config.type == EZSeamType::USER_SPECIFIED 
+            || z_seam_config.type == EZSeamType::SHARPEST_CORNER
+            || z_seam_config.type == EZSeamType::SHORTEST_SHARPEST_CORNER);
     if (optimize_backwards)
     {
         // determine the location of the z-seam and use that as the start point

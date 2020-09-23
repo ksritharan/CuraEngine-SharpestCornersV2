@@ -415,6 +415,10 @@ template<> EZSeamType Settings::get<EZSeamType>(const std::string& key) const
     {
         return EZSeamType::SHARPEST_CORNER;
     }
+    else if (value == "shortest_sharpest_corner")
+    {
+        return EZSeamType::SHORTEST_SHARPEST_CORNER;
+    }
     else //Default.
     {
         return EZSeamType::SHORTEST;

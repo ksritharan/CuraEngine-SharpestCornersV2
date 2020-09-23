@@ -37,6 +37,7 @@ void PathOrderOptimizer::optimize()
             case EZSeamType::RANDOM:
                 polyStart.push_back(getRandomPointInPolygon(poly_idx));
                 break;
+            case EZSeamType::SHORTEST_SHARPEST_CORNER:
             case EZSeamType::SHARPEST_CORNER:
             case EZSeamType::SHORTEST:
             default:
@@ -54,6 +55,7 @@ void PathOrderOptimizer::optimize()
             prev_point = config.pos;
             break;
         case EZSeamType::RANDOM: //TODO: Starting position of the first polygon isn't random.
+        case EZSeamType::SHORTEST_SHARPEST_CORNER:
         case EZSeamType::SHARPEST_CORNER:
         case EZSeamType::SHORTEST:
         default:
@@ -164,13 +166,18 @@ int PathOrderOptimizer::getClosestPointInPolygon(Point prev_point, int poly_idx)
             // shift 10mm for a very acute corner
             corner_shift = 10000 * 10000;
         }
+        else if (config.type == EZSeamType::SHORTEST_SHARPEST_CORNER)
+        {
+            // Weight the distance more heavily
+            corner_shift = dist_score * 10;
+        }
         else
         {
             // the larger the distance from prev_point to p1, the more a corner will "attract" the seam
             // so the user has some control over where the seam will lie.
 
             // the divisor here may need adjusting to obtain the best results (TBD)
-            corner_shift = dist_score / 10;
+            corner_shift = dist_score * 10;
         }
         switch (config.corner_pref)
         {
