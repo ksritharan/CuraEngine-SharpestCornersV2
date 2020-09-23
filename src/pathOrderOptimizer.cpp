@@ -177,7 +177,14 @@ int PathOrderOptimizer::getClosestPointInPolygon(Point prev_point, int poly_idx)
             // so the user has some control over where the seam will lie.
 
             // the divisor here may need adjusting to obtain the best results (TBD)
-            corner_shift = dist_score * 10;
+            if (dist_score < 1e-6)
+            {
+                corner_shift = 1e6;
+            }
+            else
+            {
+                corner_shift = 1.0/dist_score;
+            }
         }
         switch (config.corner_pref)
         {
