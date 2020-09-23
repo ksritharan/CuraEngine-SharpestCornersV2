@@ -179,11 +179,11 @@ int PathOrderOptimizer::getClosestPointInPolygon(Point prev_point, int poly_idx)
             // the divisor here may need adjusting to obtain the best results (TBD)
             if (dist_score < 1e-6)
             {
-                corner_shift = 1e6;
+                corner_shift = 1e12;
             }
             else
             {
-                corner_shift = 1.0/dist_score;
+                corner_shift = 1/(dist_score*dist_score);
             }
         }
         switch (config.corner_pref)
