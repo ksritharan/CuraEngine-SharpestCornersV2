@@ -33,7 +33,7 @@ void PathOrderOptimizer::optimize()
         switch (config.type)
         {
             case EZSeamType::USER_SPECIFIED:
-                polyStart.push_back(getClosestPointInPolygon(last_point, poly_idx));
+                polyStart.push_back(getClosestPointInPolygon(config.pos, poly_idx));
                 break;
             case EZSeamType::RANDOM:
                 polyStart.push_back(getRandomPointInPolygon(poly_idx));
