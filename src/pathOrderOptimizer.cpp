@@ -26,7 +26,6 @@ void PathOrderOptimizer::optimize()
     std::vector<bool> picked(polygons.size(), false);
     loc_to_line = nullptr;
 
-    Point last_point = config.pos;
     int poly_point_id;
     for (unsigned poly_idx = 0; poly_idx < polygons.size(); ++poly_idx) /// find closest point to initial starting point within each polygon +initialize picked
     {
@@ -34,9 +33,7 @@ void PathOrderOptimizer::optimize()
         switch (config.type)
         {
             case EZSeamType::USER_SPECIFIED:
-                poly_point_id = getClosestPointInPolygon(last_point, poly_idx);
-                polyStart.push_back(poly_point_id);
-                last_point = poly[poly_point_id];
+                polyStart.push_back(getClosestPointInPolygon(last_point, poly_idx));
                 break;
             case EZSeamType::RANDOM:
                 polyStart.push_back(getRandomPointInPolygon(poly_idx));
@@ -198,7 +195,8 @@ int PathOrderOptimizer::getClosestPointInPolygon(Point prev_point, int poly_idx)
                 {
                     // p1 lies on a convex curve so reduce the distance to favour it
                     // the more convex the curve, the more we reduce the distance
-                    dist_score -= (1 - corner_angle) * corner_shift;
+                    //dist_score -= (1 - corner_angle) * corner_shift;
+                    dist_score -= (1 - corner_angle) * dist_score * 0.2; 
                 }
                 break;
             case EZSeamCornerPrefType::Z_SEAM_CORNER_PREF_ANY:
